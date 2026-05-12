@@ -4,72 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로또 번호 자동 생성기</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 30px;
-            background-color: #f4f7f9;
-            color: #333;
-        }
-        h1 {
-            color: #1e3a8a;
-            margin-bottom: 30px;
-        }
-        #lotto-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 25px;
-            justify-content: center;
-            max-width: 1000px;
-        }
-        .lotto-set {
-            background-color: #ffffff;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            min-width: 220px;
-        }
-        .lotto-set h2 {
-            margin-top: 0;
-            color: #3b82f6;
-            font-size: 1.2em;
-            border-bottom: 2px solid #bfdbfe;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-        .ball-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 15px;
-        }
-        .ball {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            background-color: #ff6b6b;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.4em;
-            font-weight: bold;
-            color: white;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-        }
-        .additional-text {
-            margin-top: 30px;
-            font-size: 1.1em;
-            color: #6b72a8;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>✨ 로또 번호 자동 생성기 ✨</h1>
+    <h1 class="title">✨ 로또 번호 자동 생성기 ✨</h1>
     <div id="lotto-container">
         <!-- 로또 세트가 여기에 JavaScript에 의해 자동으로 채워집니다. -->
     </div>
@@ -77,69 +15,7 @@
         <p>총 5세트의 로또 번호가 자동 생성되었습니다. 이 번호들은 임의로 생성된 것이며, 재미로만 활용해 주세요!</p>
     </div>
 
-    <script>
-        /**
-         * 랜덤으로 6개의 중복되지 않는 숫자(1부터 45까지)를 생성합니다.
-         * @returns {number[]} 정렬된 숫자 배열
-         */
-        function generateLottoNumbers() {
-            const numbers = new Set();
-            while (numbers.size < 6) {
-                const randomNumber = Math.floor(Math.random() * 45) + 1;
-                numbers.add(randomNumber);
-            }
-            return Array.from(numbers).sort((a, b) => a - b);
-        }
-
-        /**
-         * HTML 요소를 생성하고, 로또 세트의 모든 정보를 담아 반환합니다.
-         * @param {number[]} lottoNumbers 6개 번호 배열
-         * @param {number} bonusNumber 보너스 번호 (추가 기능)
-         * @returns {string} 완성된 HTML 문자열
-         */
-        function createLottoHtml(lottoNumbers, bonusNumber) {
-            // 공 번호 생성 (Ball HTML)
-            const ballsHtml = lottoNumbers.map(num => `
-                <div class="ball">${num}</div>
-            `).join('');
-            // 보너스 번호 표시 (선택적)
-            const bonusHtml = bonusNumber ? `
-                <div class="ball" style="background-color: #facc15; color: #333;">${bonusNumber}</div>
-            ` : '';
-
-            return `
-                <div class="lotto-set">
-                    <h2>✨ 로또 번호 세트 ✨</h2>
-                    <div class="ball-container">
-                        ${ballsHtml}
-                    </div>
-                    <div class="ball-container" style="margin-top: 10px;">
-                        ${bonusHtml}
-                    </div>
-                </div>
-            `;
-        }
-
-        function generateAllLottos() {
-            const container = document.getElementById('lotto-container');
-            let allHtml = '';
-            const numberOfSets = 5; // 생성할 세트 수
-
-            for (let i = 0; i < numberOfSets; i++) {
-                // 로또 번호 6개 생성 (이 예제에서는 보너스 번호는 임의로 처리하지 않고 6개만 표시)
-                const lottoNumbers = generateLottoNumbers();
-
-                // 6개의 번호만 표시하는 형태로 HTML을 생성합니다.
-                const html = createLottoHtml(lottoNumbers, null);
-                allHtml += html;
-            }
-
-            container.innerHTML = allHtml;
-        }
-
-        // 페이지 로딩 시 함수 실행 (자동 실행)
-        window.onload = generateAllLottos;
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
 
