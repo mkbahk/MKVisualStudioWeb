@@ -2,73 +2,80 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>랜덤 숫자 생성기</title>
+    <title>로또 번호 생성기</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
+            padding: 20px;
             background-color: #f4f4f4;
         }
-        .container {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        #result {
-            margin-top: 25px;
-            font-size: 1.2em;
-            color: #333;
-            font-weight: bold;
+        #result-output {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-<div class="container">
-        <h1>랜덤 숫자 생성기</h1>
-        <button id="generateButton">숫자 생성하기</button>
-        <div id="result"></div>
-</div>
 
-<script>
-        document.getElementById('generateButton').addEventListener('click', generateRandomNumbers);
+    <h1>로또 번호 생성기</h1>
 
-        function generateRandomNumbers() {
-            // 1부터 100 사이의 무작위 정수 5개를 생성합니다.
-        const numbers = [];
+    <!-- JavaScript 코드를 여기에 삽입합니다. -->
+    <script>
+        let sets = [];
+function displayResults(sets) {
+    let output = "<h3>생성된 로또 번호 6개 (총 " + sets.length + "세트)</h3>";
+
+    sets.forEach((set, index) => {
+        output += `<h4>세트 ${index + 1}: ${set.join(', ')}</h4>`;
+    });
+
+    document.getElementById('result-output').innerHTML = output;
+}
+
+        // 메인 실행 함수
+        function generateLotto() {
+    let sets = [];
+
+            // 1부터 45 사이의 무작위 숫자를 선택
             for (let i = 0; i < 5; i++) {
-                // Math.floor(Math.random() * 100) + 1 : 1부터 100 사이의 난수를 생성
-                const randomNumber = Math.floor(Math.random() * 100) + 1;
-                numbers.push(randomNumber);
+                // 1부터 45 사이의 무작위 숫자를 선택
+                const num = Math.floor(Math.random() * 45) + 1;
+                sets.push(num);
             }
 
-            // 배열의 숫자를 문자열로 변환하고 쉼표로 구분하여 표시합니다.
-            const resultString = numbers.join(', ');
-            document.getElementById('result').textContent = `생성된 숫자: ${numbers.join(', ')}`;
+            // 5개 숫자를 6개로 확장하여 최종 결과를 만듭니다. (실제 로또 규칙을 따르는 것이 중요)
+            const finalResults = [];
+            for (let i = 0; i < 10; i++) { // 10세트 생성
+                const combo = [];
+                for(let j = 0; j < 6; j++) {
+                    // 1부터 45 사이의 무작위 숫자 생성
+                    const randNum = Math.floor(Math.random() * 45) + 1;
+                    if (!combo.includes(randNum)) {
+                        combo.push(randNum);
+                    }
+                }
+                if (combo.length === 6) {
+                    finalResults.push(combo.sort((a, b) => a - b));
+                }
+            }
+
+            displayResults(finalResults);
         }
+
+        // 페이지 로드 시 실행
+        window.onload = function() {
+            generateLotto();
+};
     </script>
+
+    <div id="result-output">
+        <!-- 여기에 결과가 표시됩니다. -->
+        <p>로또 번호 생성을 시작합니다...</p>
+    </div>
+
 </body>
 </html>
+
