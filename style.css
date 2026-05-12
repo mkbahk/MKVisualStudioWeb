@@ -1,0 +1,54 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f8ff; /* 하늘색 배경 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+}
+
+h1 {
+    color: #2c3e50; /* 짙은 파란색 */
+    margin-bottom: 20px;
+}
+
+#generateBtn {
+    background-color: #4CAF50; /* 녹색 버튼 */
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+}
+
+#generateBtn:hover {
+    background-color: #45a049;
+}
+
+#result {
+    margin-top: 20px;
+    padding: 15px;
+    border: 2px dashed #3498db; /* 파란색 점선 테두리 */
+    border-radius: 8px;
+    min-height: 50px;
+    text-align: left;
+}
+
+#result p {
+    font-size: 1.1em;
+    color: #333;
+}
