@@ -3,19 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>로또 번호 생성기</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>랜덤 번호 생성기</title>
+    <title>랜덤 숫자 생성기</title>
     <style>
-        /* CSS 스타일을 여기에 포함하여 파일 하나로 관리할 수 있습니다. */
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
+            background-color: #f4f4f4;
         }
         .container {
             background-color: #ffffff;
@@ -23,82 +20,55 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
-            max-width: 400px;
-            width: 90%;
         }
         h1 {
             color: #333;
             margin-bottom: 20px;
         }
-        #result {
-            font-size: 2em;
-            color: #007bff;
-            font-weight: bold;
-            margin: 20px 0;
-            padding: 15px;
-            border: 2px dashed #007bff;
-            display: inline-block;
-            min-width: 150px;
-        }
-        .copy-btn {
-            background-color: #28a745;
+        button {
+            background-color: #007bff;
             color: white;
             border: none;
-            padding: 10px 15px;
+            padding: 10px 20px;
+            font-size: 16px;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 1em;
             transition: background-color 0.3s;
         }
-        .copy-btn:hover {
-            background-color: #218838;
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 25px;
+            font-size: 1.2em;
+            color: #333;
+            font-weight: bold;
         }
     </style>
-</style>
-<!-- 실제 HTML 본문 시작 -->
+</head>
+<body>
 <div class="container">
-    <h1>🎉 랜덤 숫자 생성기</h1>
-    <p>오늘의 행운의 번호를 확인하세요!</p>
-    <div id="result">--</div>
-    <button class="copy-btn" id="copyButton">클립보드에 복사</button>
+        <h1>랜덤 숫자 생성기</h1>
+        <button id="generateButton">숫자 생성하기</button>
+        <div id="result"></div>
 </div>
 
 <script>
-    const resultElement = document.getElementById('result');
-    const copyButton = document.getElementById('copyButton');
-
-    // 랜덤 숫자 생성 함수
+        document.getElementById('generateButton').addEventListener('click', generateRandomNumbers);
     function generateRandomNumbers() {
-        // 1부터 100 사이의 숫자 6개를 랜덤으로 생성합니다.
+            // 1부터 100 사이의 무작위 정수 5개를 생성합니다.
         const numbers = [];
-        for (let i = 0; i < 6; i++) {
-            // 1에서 100 사이의 랜덤 정수를 생성합니다.
+            for (let i = 0; i < 5; i++) {
+                // Math.floor(Math.random() * 100) + 1 : 1부터 100 사이의 난수를 생성
             const randomNumber = Math.floor(Math.random() * 100) + 1;
             numbers.push(randomNumber);
         }
-        // 숫자를 오름차순으로 정렬하여 보여줍니다.
-        numbers.sort((a, b) => a - b);
-        return numbers.join(', ');
+
+            // 배열의 숫자를 문자열로 변환하고 쉼표로 구분하여 표시합니다.
+            const resultString = numbers.join(', ');
+            document.getElementById('result').textContent = `생성된 숫자: ${numbers.join(', ')}`;
     }
-
-    // 버튼 클릭 이벤트 리스너
-    copyButton.addEventListener('click', function() {
-        const resultText = resultElement.textContent;
-        // 클립보드에 복사할 텍스트를 설정합니다.
-        navigator.clipboard.writeText(resultText).then(() => {
-            copyButton.textContent = '복사 완료!';
-            setTimeout(() => {
-                copyButton.textContent = '클립보드에 복사';
-            }, 2000);
-        }).catch(err => {
-            console.error('클립보드 복사에 실패했습니다:', err);
-            alert('클립보드 복사에 실패했습니다. 수동으로 복사해 주세요.');
-        });
-    });
-
-    // 페이지 로드 시 초기 번호를 생성합니다.
-    window.onload = function() {
-        const randomNumbers = generateRandomNumbers();
-        resultElement.textContent = randomNumbers;
-    };
 </script>
+</body>
+</html>
+
