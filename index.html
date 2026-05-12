@@ -55,20 +55,20 @@
 
 <script>
         document.getElementById('generateButton').addEventListener('click', generateRandomNumbers);
-    function generateRandomNumbers() {
+
+        function generateRandomNumbers() {
             // 1부터 100 사이의 무작위 정수 5개를 생성합니다.
         const numbers = [];
             for (let i = 0; i < 5; i++) {
                 // Math.floor(Math.random() * 100) + 1 : 1부터 100 사이의 난수를 생성
-            const randomNumber = Math.floor(Math.random() * 100) + 1;
-            numbers.push(randomNumber);
-        }
+                const randomNumber = Math.floor(Math.random() * 100) + 1;
+                numbers.push(randomNumber);
+            }
 
             // 배열의 숫자를 문자열로 변환하고 쉼표로 구분하여 표시합니다.
             const resultString = numbers.join(', ');
             document.getElementById('result').textContent = `생성된 숫자: ${numbers.join(', ')}`;
-    }
-</script>
+        }
+    </script>
 </body>
 </html>
-
