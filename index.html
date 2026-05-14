@@ -19,3 +19,47 @@
 </body>
 </html>
 
+
+function createLadder(rows, columns) {
+    const ladder = document.createElement('div');
+    ladder.id = 'ladder';
+
+    for (let i = 0; i < rows; i++) {
+        const row = document.createElement('div');
+        row.className = 'ladder-row';
+
+        for (let j = 0; j < columns; j++) {
+            const cell = document.createElement('div');
+
+            if (i === 0) {
+                const playerBox = document.createElement('div');
+                playerBox.className = 'player-box';
+                playerBox.textContent = 'P' + (j + 1);
+                cell.appendChild(playerBox);
+            }
+
+            row.appendChild(cell);
+        }
+
+        ladder.appendChild(row);
+    }
+
+    return ladder;
+}
+
+function playGame() {
+    const rows = 5; // 사다리의 높이
+    const columns = 10; // 사다리의 가로 크기
+
+    ladderContainer.innerHTML = '';
+    ladderContainer.appendChild(createLadder(rows, columns));
+
+    restartBtn.style.display = 'block';
+}
+
+function restartGame() {
+    playGame();
+}
+
+playGame(); // 게임 시작 시 사다리를 생성
+</html>
