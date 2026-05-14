@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆 5인 사다리 게임</title>
+    <!-- CSS 파일을 반드시 연결합니다 -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🎲 운명 사다리 게임</h1>
+
+        <!-- 1. 설정 영역 -->
+        <div class="setup-area">
+            <label for="participants">참가자 이름 (쉼표(,) 또는 공백으로 구분):</label>
+            <!-- ID를 부여하여 JavaScript에서 접근 가능하게 합니다 -->
+            <input type="text" id="participants" value="철수, 영희, 민준, 지수, 현우" placeholder="참가자 이름 입력">
+            
+            <!-- ID를 부여하여 JavaScript에서 이벤트 리스너를 추가합니다 -->
+            <button id="start-button">✅ 추첨 시뮬레이션 시작</button>
+        </div>
+
+        <!-- 2. 게임 표시 영역 -->
+        <div class="game-area">
+            <h2>🪜 시뮬레이션 라더</h2>
+            <!-- 라더가 그려질 컨테이너 -->
+            <div id="ladderContainer" class="ladder">
+                <!-- 내용은 JS가 채웁니다 -->
+            </div>
+            
+            <!-- 결과 표시 영역 -->
+            <div id="result-display">
+                <p>준비되셨나요? 버튼을 눌러 운명의 다리를 건너보세요!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript 파일을 연결합니다 (body 끝에 위치시키는 것이 성능에 좋음) -->
+    <script src="script.js"></script>
+</body>
+</html>
