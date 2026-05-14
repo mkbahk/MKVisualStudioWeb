@@ -1,42 +1,113 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏆 5인 사다리 게임</title>
-    <!-- CSS 파일을 반드시 연결합니다 -->
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        <h1>🎲 운명 사다리 게임</h1>
+document.addEventListener('DOMContentLoaded', () => {
+    const startButton = document.getElementById('start-button');
+    const statusMessage = document.getElementById('status-message');
+    const resultArea = document.getElementById('result-area');
+    const participantsInput = document.getElementById('participants_input'); // ★ ID 변경 반영
 
-        <!-- 1. 설정 영역 -->
-        <div class="setup-area">
-            <label for="participants">참가자 이름 (쉼표(,) 또는 공백으로 구분):</label>
-            <!-- ID를 부여하여 JavaScript에서 접근 가능하게 합니다 -->
-            <input type="text" id="participants" value="철수, 영희, 민준, 지수, 현우" placeholder="참가자 이름 입력">
-            
-            <!-- ID를 부여하여 JavaScript에서 이벤트 리스너를 추가합니다 -->
-            <button id="start-button">✅ 추첨 시뮬레이션 시작</button>
-        </div>
+    // 초기 상태 설정
+    startButton.textContent = "추첨 시뮬레이션 시작";
+    startButton.disabled = false;
 
-        <!-- 2. 게임 표시 영역 -->
-        <div class="game-area">
-            <h2>🪜 시뮬레이션 라더</h2>
-            <!-- 라더가 그려질 컨테이너 -->
-            <div id="ladderContainer" class="ladder">
-                <!-- 내용은 JS가 채웁니다 -->
-            </div>
-            
-            <!-- 결과 표시 영역 -->
-            <div id="result-display">
-                <p>준비되셨나요? 버튼을 눌러 운명의 다리를 건너보세요!</p>
-            </div>
-        </div>
-    </div>
+    /**
+     * 가상의 결과(순위)를 생성하고 HTML을 반환합니다.
+     */
+    function generateResult() {
+        // ★ 실제 참가자 수에 맞춰 이 배열을 수정하거나, 
+        //    실제 참가자 목록을 받아와야 합니다. (현재는 예시로 고정)
+        const participants = Array.from(participantsInput.value.split(/[, ]+/).filter(p => p.length > 0));
+        
+        if (participants.length < 2) {
+             return '<h3 style="color: red;">오류: 참가자 수가 부족합니다.</h3>';
+        }
 
-    <!-- JavaScript 파일을 연결합니다 (body 끝에 위치시키는 것이 성능에 좋음) -->
-    <script src="script.js"></script>
-</body>
-</html>
+        // 참가자 목록을 무작위로 섞어 순위를 결정합니다.
+        const shuffledParticipants = [...participants].sort(() => Math.random() - 0.5);
+        
+        let resultHTML = '<h3 style="color: #2c3e50;">✨ 추첨 결과 ✨</h3>';
+        resultHTML += '<ol style="list-style-type: none; padding: 0;">';
+        
+        shuffledParticipants.forEach((person, index) => {
+            // 1등에게는 특별한 스타일을 적용합니다.
+            const listItemStyle = index === 0 ? 'color: gold; font-size: 1.2em;' : '';
+            resultHTML += `<li style="padding: 8px 0; border-bottom: 1px dotted #eee;">
+                                <strong style="${listItemStyle}">${index + 1}번째: ${person}</strong> 
+                                ${index === 0 ? '🏆 (최우수상)' : ''}
+                            </li>`;
+        });
+        resultHTML += '</ol>';
+
+        return resultHTML;
+    }
+
+    /**
+     * 메인 추첨 로직을 실행합니다.
+     */
+    function runLottery() {
+        const inputParticipants = participantsInput.value.trim();
+        
+        if (!inputParticipants) {
+            alert("⚠️ 참가자 이름을 입력해주세요.");
+            return;
+        }
+
+        // 참가자 목록 추출 및 유효성 검사
+        const participantsList = inputParticipants.split(/[, ]+/).map(name => name.trim()).filter(name => name.length > 0);
+
+        if (participantsList.length < 2) {
+            alert("⚠️ 추첨을 위해서는 최소 2명 이상의 참가자 이름이 필요합니다.");
+            return;
+        }
+
+        // UI 상태 변경 (로딩 시작)
+        startButton.disabled = true;
+        startButton.textContent = "추첨 중... 잠시만 기다려 주세요!";
+        statusMessage.textContent = '';
+        resultArea.innerHTML = '';
+
+
+        // ★ 시뮬레이션 애니메이션 (20단계)
+        let count = 0;
+        const interval = setInterval(() => {
+            count++;
+            if (count < 20) {
+                // 추첨 중 깜빡이는 효과
+                const flashingText = Math.random() > 0.5 ? '✨' : '⭐';
+                statusMessage.textContent = `💫 ${flashingText} 추첨 중... ${Math.floor((count / 20) * 100)}% 진행됨 ${flashingText}`;
+            } else {
+                clearInterval(interval);
+                
+                // 최종 결과 표시
+                const finalResult = generateResult();
+                resultArea.innerHTML = finalResult;
+                
+                // 버튼 복구
+                startButton.disabled = false;
+                startButton.textContent = "다시 추첨하기";
+            }
+        }, 150);
+    }
+
+    // 버튼에 이벤트 리스너를 연결합니다.
+    document.getElementById('start-button').addEventListener('click', () => {
+        // 버튼의 텍스트를 임시로 변경하여 클릭을 유도합니다.
+        const button = document.getElementById('start-button');
+        button.textContent = "결과 확인 중...";
+        button.disabled = true;
+        
+        // 1초 후 실제 로직을 실행합니다.
+        setTimeout(() => {
+            button.textContent = "결과 확인";
+            button.disabled = false;
+            // 실제 로직 실행 (위의 이벤트 리스너가 다시 트리거되도록 하거나, 직접 함수를 호출)
+            // 여기서는 간단히 버튼의 클릭 이벤트를 다시 발생시켜 로직을 재실행합니다.
+            document.getElementById('start-button').click();
+        }, 1000);
+    });
+    
+    // 초기화 시 버튼 텍스트를 설정합니다.
+    const button = document.getElementById('start-button');
+    if (button) {
+        button.textContent = "결과 확인";
+    }
+});
+
